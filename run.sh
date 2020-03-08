@@ -1,0 +1,2 @@
+./pisnake
+stty echo

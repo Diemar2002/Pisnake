@@ -4,14 +4,19 @@
 #include "base.h"
 #include <iostream>
 
+#define GRAVITY 1
+
 class Digit {
 public:
     Vec pos = Vec(0.0f, 0.0f);
     unsigned char num;
     bool alive = true;
+    bool dropped = false;
+    float speed;
     Digit(const float x, const float y, const unsigned char num);
     void update();
     void render();
+    void drop();
 };
 
 #endif

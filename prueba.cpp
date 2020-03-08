@@ -1,24 +1,35 @@
 #include <iostream>
+#include <vector>
+using namespace std;
 
-int round(float num) {
-    bool positive = true;
-    if(num < 0){
-        positive = false;
-        num = -num;
+std::vector<int> prueba = {2, 5, 3, 6, 1, 4};
+
+void insertionSort(int arr[], int n)
+{
+    int i, key, j;
+    for (i = 1; i < n; i++)
+    {
+        key = arr[i];
+        j = i - 1;
+
+        /* Move elements of arr[0..i-1], that are
+        greater than key, to one position ahead
+        of their current position */
+        while (j >= 0 && arr[j] > key)
+        {
+            arr[j + 1] = arr[j];
+            j = j - 1;
+        }
+        arr[j + 1] = key;
     }
-
-    int ent = (int)num;
-    float buff = num - ent;
-
-    if (buff < 0.5)
-        return (positive ? ent:(-ent));
-    else 
-        return (positive ? (ent+1):(-(ent+1)));
 }
 
 int main() {
-
-	float num = -3.5;
-	std::cout << round(num) << '\n';
+    for (int i = 0; i < prueba.size(); i++) cout << prueba[i];
+    cout << '\n';
+    insertionSort(&prueba[0], prueba.size());
+    for (int i = 0 ; i < prueba.size(); i++)
+        cout << prueba[i];
+    cout << '\n';
 	return 0;
 }

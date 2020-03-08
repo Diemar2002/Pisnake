@@ -1,5 +1,5 @@
 #include "player.h"
-#include <iostream>
+#include <stdio.h>
 
 using namespace std;
 
@@ -25,23 +25,29 @@ void Player::update() {
 
     static Vec prevPos(pos.x, pos.y);
 
-    if (input->keys['w']) {
+    int firstPosX = -1, firstPosY = -1;
+    if (len > 1) {
+        firstPosX = tail[0]->pos.x;
+        firstPosY = tail[0]->pos.y;
+    }
+
+    if (input->keys['w'] && (firstPosY != ((int)pos.y - 1))) {
         speed.y = -SPEED;
         speed.x = 0;
     }
-    if (input->keys['a']) {
+    if (input->keys['a'] && (firstPosX != ((int)pos.x - 1))) {
         speed.x = -SPEED;
         speed.y = 0;
     }
-    if (input->keys['s']){
+    if (input->keys['s'] && (firstPosY != ((int)pos.y + 1))) {
         speed.y = SPEED;
         speed.x = 0;
     }
-    if (input->keys['d']) {
+    if (input->keys['d'] && (firstPosX != ((int)pos.x + 1))) {
         speed.x = SPEED;
         speed.y = 0;
     }
-    
+
     pos.x += speed.x*delta;
     pos.y += speed.y*delta;
 
@@ -69,7 +75,7 @@ void Player::update() {
 }
 
 void Player::render() {
-    cout << "\033[33m\033[" << (int)(pos.y*factor) << ";" << (int)pos.x << "H3\033[0m";
+    printf("\033[33m\033[%i;%iH3\033[0m", (int)(pos.y * factor), (int)pos.x);
 }
 
 void Player::eat(Digit* d) {
