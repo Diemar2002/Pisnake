@@ -12,7 +12,7 @@ public:
     unsigned char num;
     bool alive = true;
     bool dropped = false;
-    float speed;
+    Vec speed = Vec(0.0f, 0.0f);
     Digit(const float x, const float y, const unsigned char num);
     void update();
     void render();
