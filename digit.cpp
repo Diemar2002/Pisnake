@@ -11,7 +11,7 @@ extern int totalSizeY, totalSizeX;
 Digit::Digit(const float x, const float y, const unsigned char num) {
     this->pos = Vec(x, y);
     this->num = num;
-    this->speed.set(((rand() % 1000) / 100.0f) - 5.0f, ((rand() % 1000) / 100.0f) - 5.0f);
+    this->speed.set(((rand() % 1000) / (1000.0f / (float)EXPLOSION_PWR)) - ((float)EXPLOSION_PWR / 2.0f), ((rand() % 1000) / (1000.0f / EXPLOSION_PWR)) - ((float)EXPLOSION_PWR / 2.0f));
 }
 
 void Digit::update() {

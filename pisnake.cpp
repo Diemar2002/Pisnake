@@ -7,9 +7,12 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <algorithm>
+#include <string.h>
+#include <limits>
 
 #include "base.h"
 #include "digit.h"
+#include "saves.h"
 using namespace std;
 
 // TODO: Evitar que los cositos aparezcan dentro del jugador
@@ -68,12 +71,6 @@ int main() {
     if (WIDTH <= sizex) sizex = WIDTH;
     if (HEIGHT <= sizey) sizey = HEIGHT;
 
-    termios oldt;
-    tcgetattr(STDIN_FILENO, &oldt);
-    termios newt = oldt;
-    newt.c_lflag &= ~ECHO;
-    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
-
     // Inicialización de variables
 
     Digit* dig;
@@ -90,7 +87,14 @@ int main() {
         std::getchar();
     }
 
-    start: // Inicio del juego. Se va a esta etiqueta cuando termina la secuencia de muerte
+start: // Inicio del juego. Se va a esta etiqueta cuando termina la secuencia de muerte
+
+    termios oldt;
+    tcgetattr(STDIN_FILENO, &oldt);
+    termios newt = oldt;
+    newt.c_lflag &= ~ECHO;
+    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+
     points = 0;
     canRender = true;
     bool open = true;
@@ -139,7 +143,32 @@ int main() {
             printf("\033[1;1H\033[2JGame Over");
             printf("\nPuntuación: %i\n", points);
 
-            std::getchar();
+            // Sistema de las puntuaciones
+            int scores[6];
+            string names[6];
+
+            // Volver a poner la terminal en modo normal
+            system("stty echo");
+
+            printf("\nIntroduzca el nombre: ");
+            char name[15];
+            scanf("%s", name);
+            printf("\n");
+
+            names[5] = string(name);
+            scores[5] = points;
+
+            leaderboard::read(scores, names, 5);
+            leaderboard::sort(scores, names, 6);
+
+            for (int i = 0; i < 5; i++)
+                printf("%s %i\n", names[i].c_str(), scores[i]);
+
+            leaderboard::save(scores, names, 5);
+
+            printf("\nPulse una tecla para continuar");
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            getchar();
 
             goto start;
         }

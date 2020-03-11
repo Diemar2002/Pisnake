@@ -4,7 +4,8 @@
 #include "base.h"
 #include <iostream>
 
-#define GRAVITY 1
+#define GRAVITY 20
+#define EXPLOSION_PWR 50
 
 class Digit {
 public:
