@@ -1,3 +1,7 @@
+/*
+ * Programa creado por Diego Morales Román, Óscar Pérez Camacho y Leonardo Iordache.
+ */
+
 #include <iostream>
 #include <stdio.h>
 #include <sys/ioctl.h>
@@ -14,8 +18,6 @@
 #include "digit.h"
 #include "saves.h"
 using namespace std;
-
-// TODO: Evitar que los cositos aparezcan dentro del jugador
 
 /*
  * Control del tiempo para la frecuencia de actualización de la pantalla
